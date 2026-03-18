@@ -11,7 +11,6 @@
             --danger: #ef4444; --success: #10b981; --accent: #8b5cf6;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; user-select: none; }
-        
         body { 
             background: var(--bg); color: white; height: 100dvh; 
             display: flex; flex-direction: column; overflow: hidden;
@@ -19,12 +18,12 @@
             touch-action: manipulation;
         }
 
-        /* --- اللوبي --- */
+        /* ===== اللوبي ===== */
         #lobbyUI { 
             position: fixed; inset: 0; background: var(--bg); z-index: 2000; 
             display: flex; flex-direction: column; align-items: center; justify-content: center; 
             background-image: radial-gradient(circle, #1e293b 0%, #0f172a 100%);
-            gap: 15px; padding: 30px;
+            gap: 18px; padding: 30px;
         }
         .lobby-title { font-size: 3.5rem; color: var(--primary); font-weight: 900; }
         .lobby-pin-box {
@@ -38,158 +37,182 @@
         }
         .lobby-pin-label { font-size: 1rem; color: #94a3b8; margin-bottom: 5px; }
         .lobby-pin-val { font-size: 3rem; font-weight: 900; color: var(--primary); letter-spacing: 8px; }
-        #lobbyStatus { font-size: 1.2rem; color: #94a3b8; }
-        .btn-start { background: var(--primary); color: #000; padding: 15px 50px; font-size: 1.5rem; border-radius: 50px; border: none; cursor: pointer; font-weight: 900; transition: 0.2s; }
+        .btn-start { 
+            background: var(--primary); color: #000; padding: 15px 50px; 
+            font-size: 1.5rem; border-radius: 50px; border: none; cursor: pointer; 
+            font-weight: 900; transition: 0.2s; 
+        }
         .btn-start:active { transform: scale(0.96); }
         .btn-start:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        /* --- الشريط العلوي (السؤال) --- */
+        /* ===== السؤال ===== */
         .top-header {
-            background: rgba(30, 41, 59, 0.95); backdrop-filter: blur(15px);
-            padding: 10px 20px 12px; border-bottom: 3px solid var(--accent); text-align: center;
-            z-index: 10; min-height: 90px; display: flex; flex-direction: column; justify-content: center;
-            position: relative;
+            background: rgba(15,23,42,0.98); backdrop-filter: blur(15px);
+            padding: 12px 15px; border-bottom: 3px solid var(--accent); text-align: center;
+            z-index: 10; min-height: 85px; display: flex; flex-direction: column; justify-content: center;
         }
-        
         #qText { 
-            font-size: 1.9rem; font-weight: 900; color: #fff; 
+            font-size: 1.75rem; font-weight: 900; color: #fff; 
             line-height: 1.3; max-width: 900px; margin: 0 auto;
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+            text-shadow: 0 0 20px rgba(139,92,246,0.7);
         }
-
         .q-underline {
-            height: 5px; width: 0; background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            height: 4px; width: 0; 
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
             margin: 8px auto 0; border-radius: 10px;
-            animation: pulse-glow 2s infinite; transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            animation: pulse-glow 2s infinite; 
+            transition: width 1.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
         @keyframes pulse-glow {
-            0%, 100% { opacity: 0.4; }
+            0%,100% { opacity: 0.4; }
             50% { opacity: 1; box-shadow: 0 0 25px var(--primary); }
         }
 
-        /* --- ساحة اللعب --- */
+        /* ===== الساحة ===== */
         .arena { flex: 1; display: flex; position: relative; width: 100%; overflow: hidden; }
         .player-side {
             flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 15px; position: relative;
+            padding: 15px; position: relative; gap: 12px;
         }
-        .side-1 { border-left: 1px solid rgba(255,255,255,0.07); }
+        /* في RTL: أول عنصر = يمين، ثاني عنصر = يسار */
+        /* "أنا" سيكون دائماً في #side-me (العنصر الأول = يمين) */
+        #side-me { border-left: 1px solid rgba(255,255,255,0.07); }
 
-        .player-name-label { font-size: 1.2rem; font-weight: 900; margin-bottom: 12px; color: #94a3b8; }
-        .player-score-big { font-size: 2.8rem; font-weight: 900; color: var(--accent); }
-        .player-score-sub { font-size: 0.85rem; color: #64748b; margin-top: 2px; }
+        .player-name-label { 
+            font-size: 1.1rem; font-weight: 900; color: #94a3b8; 
+            background: rgba(255,255,255,0.05); padding: 5px 18px; border-radius: 30px;
+        }
+        .my-label { color: var(--primary) !important; background: rgba(251,191,36,0.08) !important; border: 1px solid rgba(251,191,36,0.25); }
 
-        /* زر المزايدة الكبير (بدون ناقص!) */
+        .player-score-big { font-size: 2.8rem; font-weight: 900; color: var(--accent); line-height: 1; }
+        .player-score-sub { font-size: 0.8rem; color: #64748b; }
+
+        /* زر المزايدة */
         .bid-btn-big {
-            width: 110px; height: 110px; border-radius: 50%;
+            width: 105px; height: 105px; border-radius: 50%;
             background: radial-gradient(circle, #22c55e, #15803d);
             border: none; font-size: 3.5rem; color: #fff;
-            box-shadow: 0 0 30px rgba(34,197,94,0.4), 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 0 35px rgba(34,197,94,0.45), 0 8px 20px rgba(0,0,0,0.4);
             cursor: pointer; transition: 0.15s; font-weight: 900;
+            display: none; align-items: center; justify-content: center;
         }
-        .bid-btn-big:active { transform: scale(0.92); box-shadow: 0 0 10px rgba(34,197,94,0.3); }
-        .bid-btn-big:disabled { opacity: 0.3; cursor: not-allowed; }
+        .bid-btn-big:active { transform: scale(0.91); }
+        .bid-btn-big:disabled { opacity: 0.25; cursor: not-allowed; transform: none; }
 
-        /* مربع النقرات الخاص بصاحب (يرى نقرات صاحبه) */
-        .clicker-counter-box {
-            width: 120px; height: 120px; border-radius: 25px;
-            background: rgba(59,130,246,0.1); border: 3px solid #3b82f6;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin-top: 15px;
+        /* مربع عداد النقرات */
+        .click-counter-box {
+            width: 105px; height: 105px; border-radius: 22px;
+            background: rgba(59,130,246,0.08); border: 3px solid rgba(59,130,246,0.4);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
         }
-        .clicker-counter-val { font-size: 3rem; font-weight: 900; color: #3b82f6; }
-        .clicker-counter-lbl { font-size: 0.75rem; color: #94a3b8; margin-top: 2px; }
+        .click-counter-val { font-size: 2.8rem; font-weight: 900; color: #60a5fa; }
+        .click-counter-lbl { font-size: 0.75rem; color: #64748b; }
 
-        /* الكونسول المركزي */
+        /* ===== الكونسول المركزي ===== */
         .center-hub {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 240px; z-index: 5; text-align: center;
-            background: #0a1628; border: 4px solid var(--accent);
-            border-radius: 35px; padding: 18px 15px; box-shadow: 0 0 60px rgba(0,0,0,0.9), 0 0 30px rgba(139,92,246,0.2);
+            width: 225px; z-index: 5; text-align: center;
+            background: #080f1e; border: 4px solid var(--accent);
+            border-radius: 30px; padding: 16px 12px; 
+            box-shadow: 0 0 70px rgba(0,0,0,0.95), 0 0 40px rgba(139,92,246,0.25);
         }
-        .hub-label { color: #64748b; font-size: 0.8rem; font-weight: bold; margin-bottom: 3px; }
+        .hub-label { color: #475569; font-size: 0.78rem; font-weight: bold; margin-bottom: 4px; }
         .current-bid-val { font-size: 4rem; font-weight: 900; color: var(--primary); line-height: 1; }
-        .bidder-name-label { font-size: 0.9rem; color: #fff; font-weight: bold; margin-top: 4px; opacity: 0.9; }
-
+        .bidder-name-lbl { font-size: 0.85rem; color: #cbd5e1; font-weight: bold; margin-top: 5px; }
         .btn-go { 
-            width: 100%; padding: 13px; 
+            width: 100%; padding: 11px; 
             background: linear-gradient(135deg, var(--accent), #7c3aed);
-            color: white; font-size: 1.1rem; font-weight: 900;
-            border: none; border-radius: 18px; cursor: pointer; transition: 0.2s;
-            margin-top: 14px;
+            color: white; font-size: 1rem; font-weight: 900;
+            border: none; border-radius: 16px; cursor: pointer; transition: 0.2s;
+            margin-top: 12px;
         }
         .btn-go:active { transform: scale(0.95); }
-        .btn-go:disabled { background: #334155; opacity: 0.5; cursor: not-allowed; }
-
-        /* --- شاشة التحدي --- */
-        .challenge-overlay {
-            position: fixed; inset: 0; background: rgba(10,15,30,0.97); z-index: 2500;
-            display: none; flex-direction: column; align-items: center; justify-content: center; gap: 15px;
+        .btn-go:disabled { background: #1e293b; color: #475569; cursor: not-allowed; transform: none; }
+        .btn-skip {
+            width: 100%; padding: 8px;
+            background: rgba(239,68,68,0.1); color: #f87171;
+            border: 1px solid rgba(239,68,68,0.4); border-radius: 14px;
+            font-size: 0.85rem; font-weight: 900; cursor: pointer; transition: 0.2s;
+            margin-top: 8px; display: none;
         }
-        .challenge-header { font-size: 1.3rem; color: #94a3b8; font-weight: bold; }
-        #timerDisplay { font-size: 7rem; font-weight: 900; color: var(--danger); line-height: 1; }
-        .goal-row { font-size: 1.6rem; color: var(--primary); font-weight: 900; }
-        
-        /* مربع النقر الكبير (دائرة) */
+        .btn-skip:active { transform: scale(0.95); }
+
+        /* ===== شاشة التحدي ===== */
+        .challenge-overlay {
+            position: fixed; inset: 0; background: rgba(5,10,20,0.98); z-index: 2500;
+            display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+        }
+        .ch-header { font-size: 1.2rem; color: #94a3b8; font-weight: bold; }
+        #timerDisplay { 
+            font-size: 7.5rem; font-weight: 900; color: var(--danger); line-height: 1;
+            text-shadow: 0 0 30px rgba(239,68,68,0.5);
+        }
+        #timerDisplay.warning { animation: timer-flash 0.5s infinite; }
+        @keyframes timer-flash { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+        .goal-row { 
+            font-size: 1.5rem; color: var(--primary); font-weight: 900;
+            background: rgba(251,191,36,0.1); padding: 8px 25px; border-radius: 50px;
+            border: 1px solid rgba(251,191,36,0.3);
+        }
         .clicker-circle {
-            width: 240px; height: 240px; border-radius: 50%;
+            width: 230px; height: 230px; border-radius: 50%;
             background: radial-gradient(circle, #2563eb, #1e3a8a);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 0 60px rgba(59,130,246,0.4), 0 0 0 10px rgba(59,130,246,0.1);
-            cursor: pointer; border: none; transition: 0.1s;
+            box-shadow: 0 0 60px rgba(59,130,246,0.4), 0 0 0 12px rgba(59,130,246,0.08);
+            cursor: pointer; border: none; transition: 0.1s; gap: 5px;
         }
-        .clicker-circle:active { transform: scale(0.94); }
-        .clicker-circle.locked { background: radial-gradient(circle, #374151, #1f2937); cursor: not-allowed; box-shadow: none; }
+        .clicker-circle:active { transform: scale(0.93); }
+        .clicker-circle.locked { 
+            background: radial-gradient(circle, #374151, #1f2937); 
+            cursor: not-allowed; box-shadow: none; pointer-events: none;
+        }
         .clicker-big-num { font-size: 5.5rem; font-weight: 900; color: #fff; line-height: 1; }
-        .clicker-instruction { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-top: 5px; }
+        .clicker-hint { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
 
-        /* --- شريط النقاط السفلي --- */
+        /* ===== شريط النقاط ===== */
         .footer-scores {
-            background: var(--card); padding: 10px 20px; display: flex; justify-content: space-around;
-            border-top: 2px solid #334155; z-index: 10; align-items: center;
+            background: #0a1220; padding: 10px 20px; 
+            display: flex; justify-content: space-around; align-items: center;
+            border-top: 2px solid #1e293b; z-index: 10;
         }
         .score-col { text-align: center; }
-        .score-col-name { font-weight: 900; font-size: 0.95rem; }
+        .score-col-name { font-weight: 900; font-size: 0.9rem; color: #94a3b8; }
         .round-dots { display: flex; gap: 8px; margin-top: 5px; justify-content: center; }
-        .dot { width: 16px; height: 16px; border-radius: 50%; background: #334155; transition: 0.3s; }
-        .dot.won { background: var(--success); box-shadow: 0 0 12px var(--success); }
-        .vs-badge { font-size: 1.5rem; font-weight: 900; color: var(--accent); }
+        .dot { width: 15px; height: 15px; border-radius: 50%; background: #1e293b; transition: 0.3s; border: 2px solid #334155; }
+        .dot.won { background: var(--success); box-shadow: 0 0 12px var(--success); border-color: var(--success); }
+        .vs-badge { font-size: 1.4rem; font-weight: 900; color: var(--accent); }
 
-        /* --- رسالة عامة --- */
+        /* ===== أوفرلي الرسائل ===== */
         .overlay-msg { 
             position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 4000; 
             display: none; flex-direction: column; align-items: center; justify-content: center; 
-            text-align: center; padding: 30px; 
+            text-align: center; padding: 30px; gap: 15px;
         }
-        .overlay-msg h1 { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
-        .overlay-msg p { font-size: 1.3rem; color: #cbd5e1; margin-bottom: 30px; }
+        .overlay-msg h1 { font-size: 3rem; color: var(--primary); }
+        .overlay-msg p { font-size: 1.25rem; color: #cbd5e1; white-space: pre-line; }
         .btn-continue { 
-            background: var(--accent); color: white; padding: 15px 60px; 
-            font-size: 1.3rem; font-weight: 900; border: none; border-radius: 50px; cursor: pointer;
+            background: var(--accent); color: white; padding: 14px 55px; 
+            font-size: 1.2rem; font-weight: 900; border: none; border-radius: 50px; cursor: pointer;
         }
 
-        /* --- شاشة انتهاء السؤال (Skip) --- */
+        /* ===== سكب ===== */
         .skip-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.97); z-index: 3500;
             display: none; flex-direction: column; align-items: center; justify-content: center;
             text-align: center; padding: 30px; gap: 20px;
         }
         .skip-overlay h2 { font-size: 2.5rem; color: var(--danger); font-weight: 900; }
-        .skip-overlay p { font-size: 1.2rem; color: #94a3b8; }
-        .btn-skip-confirm {
-            background: #dc2626; color: white; padding: 14px 50px;
-            font-size: 1.2rem; font-weight: 900; border: none; border-radius: 50px; cursor: pointer;
-        }
-        .btn-skip-cancel {
-            background: #334155; color: white; padding: 12px 40px;
-            font-size: 1rem; font-weight: 900; border: none; border-radius: 50px; cursor: pointer;
-        }
+        .skip-overlay p { font-size: 1.1rem; color: #94a3b8; }
+        .btn-skip-c { background: #dc2626; color: white; padding: 14px 50px; font-size: 1.2rem; font-weight: 900; border: none; border-radius: 50px; cursor: pointer; }
+        .btn-skip-x { background: #334155; color: white; padding: 12px 40px; font-size: 1rem; font-weight: 900; border: none; border-radius: 50px; cursor: pointer; }
 
         @media (max-width: 600px) {
-            .center-hub { width: 200px; padding: 14px 10px; }
-            .current-bid-val { font-size: 3.2rem; }
-            #qText { font-size: 1.5rem; }
-            .bid-btn-big { width: 90px; height: 90px; font-size: 3rem; }
+            .center-hub { width: 190px; padding: 13px 10px; }
+            .current-bid-val { font-size: 3rem; }
+            #qText { font-size: 1.35rem; }
+            .bid-btn-big { width: 85px; height: 85px; font-size: 2.8rem; }
+            .clicker-circle { width: 195px; height: 195px; }
+            .clicker-big-num { font-size: 4.2rem; }
         }
     </style>
 </head>
@@ -198,79 +221,72 @@
 <!-- اللوبي -->
 <div id="lobbyUI">
     <div class="lobby-title">المزاد 🔥</div>
-    <p id="lobbyStatus" style="color:#94a3b8; font-size:1.1rem;">جاري الاتصال...</p>
-    
-    <!-- يظهر كود الغرفة للهوست هنا بوضوح -->
+    <p id="lobbyStatus" style="color:#94a3b8;font-size:1.1rem;">جاري الاتصال...</p>
     <div class="lobby-pin-box" id="hostPinBox" style="display:none;">
-        <div class="lobby-pin-label">أرسل هذا الكود لصاحبك 👇</div>
+        <div class="lobby-pin-label">📋 أرسل هذا الكود لصاحبك</div>
         <div class="lobby-pin-val" id="lobbyPinVal">----</div>
     </div>
-
     <div id="hostActions" style="display:none; text-align:center;">
         <button class="btn-start" id="startBtn" onclick="hostStartGame()" disabled>⏳ في انتظار الخصم...</button>
     </div>
-    <div id="guestWaiting" style="display:none; color:#64748b; font-size:1rem;">جاري انتظار الهوست ليبدأ اللعبة...</div>
+    <div id="guestWaiting" style="display:none; color:#64748b; font-size:1rem;">في انتظار الهوست ليبدأ...</div>
 </div>
 
-<!-- السؤال في الأعلى -->
+<!-- السؤال -->
 <div class="top-header">
-    <div id="qContainer">
-        <h2 id="qText">⚡ في انتظار البدء...</h2>
-        <div class="q-underline" id="qUnderline"></div>
-    </div>
+    <h2 id="qText">⚡ في انتظار البدء...</h2>
+    <div class="q-underline" id="qUnderline"></div>
 </div>
 
-<!-- الساحة المنقسمة -->
+<!-- الساحة -->
+<!-- في RTL: العنصر الأول يظهر على اليمين -->
+<!-- سنضع "أنا" دائماً على اليمين = العنصر الأول -->
 <div class="arena">
-    <!-- جانب اللاعب 2 (يمين - الضيف) -->
-    <div class="player-side" id="side-p2">
-        <div class="player-name-label" id="p2Label">اللاعب 2</div>
-        <div class="bid-btn-big" id="bidBtn2" style="display:none;" onclick="bid()">+</div>
-        <!-- مربع عدد النقرات (يظهر لصاحبه أثناء التحدي) -->
-        <div class="clicker-counter-box" id="p2ClickerBox" style="display:none;">
-            <div class="clicker-counter-val" id="p2ClickCount">0</div>
-            <div class="clicker-counter-lbl">نقرة</div>
+    <!-- أنا (يمين دائماً) -->
+    <div class="player-side" id="side-me">
+        <div class="player-name-label my-label" id="myLabel">أنا</div>
+        <div class="bid-btn-big" id="myBidBtn" onclick="bid()">+</div>
+        <div class="click-counter-box" id="myClickBox">
+            <div class="click-counter-val" id="myClickVal">0</div>
+            <div class="click-counter-lbl">نقرة</div>
         </div>
-        <div class="player-score-big" id="p2ScoreLabel">0</div>
+        <div class="player-score-big" id="myScoreLabel">0</div>
         <div class="player-score-sub">نقطة</div>
     </div>
 
-    <!-- المركز -->
+    <!-- الكونسول المركزي -->
     <div class="center-hub">
         <div class="hub-label">أعلى مزايدة</div>
         <div class="current-bid-val" id="bidDisplay">0</div>
-        <div class="bidder-name-label" id="bidderName">ابدأ المزايدة</div>
+        <div class="bidder-name-lbl" id="bidderName">ابدأ المزايدة</div>
         <button class="btn-go" id="goBtn" onclick="sendGo()">روح أنت 🚀</button>
-        <!-- زر سكيب (يظهر فقط للهوست في مرحلة المزاد) -->
-        <button class="btn-go" id="skipBtn" onclick="showSkipDialog()" style="margin-top:8px; background:rgba(239,68,68,0.2); color:#ef4444; border: 1px solid #ef4444; display:none; font-size:0.9rem; padding:8px;">⏭ سكب السؤال</button>
+        <button class="btn-skip" id="skipBtn" onclick="showSkipDialog()">⏭ سكب السؤال</button>
     </div>
 
-    <!-- جانب اللاعب 1 (يسار - الهوست) -->
-    <div class="player-side side-1" id="side-p1">
-        <div class="player-name-label" id="p1Label">اللاعب 1</div>
-        <div class="bid-btn-big" id="bidBtn1" style="display:none;" onclick="bid()">+</div>
-        <!-- مربع عدد النقرات -->
-        <div class="clicker-counter-box" id="p1ClickerBox" style="display:none;">
-            <div class="clicker-counter-val" id="p1ClickCount">0</div>
-            <div class="clicker-counter-lbl">نقرة</div>
+    <!-- الخصم (يسار دائماً) -->
+    <div class="player-side" id="side-opp">
+        <div class="player-name-label" id="oppLabel">الخصم</div>
+        <div class="click-counter-box" id="oppClickBox">
+            <div class="click-counter-val" id="oppClickVal">0</div>
+            <div class="click-counter-lbl">نقرة</div>
         </div>
-        <div class="player-score-big" id="p1ScoreLabel">0</div>
+        <div class="player-score-big" id="oppScoreLabel">0</div>
         <div class="player-score-sub">نقطة</div>
     </div>
 </div>
 
-<!-- شريط النقاط والجولات -->
+<!-- شريط النقاط -->
 <div class="footer-scores">
     <div class="score-col">
-        <div class="score-col-name" id="p1NameFooter">...</div>
-        <div class="round-dots" id="p1Rounds">
+        <div class="score-col-name" id="myFooterName">أنا</div>
+        <div class="round-dots" id="myRoundDots">
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </div>
     </div>
     <div class="vs-badge">VS</div>
     <div class="score-col">
-        <div class="score-col-name" id="p2NameFooter">...</div>
-        <div class="round-dots" id="p2Rounds">
+        <div class="score-col-name" id="oppFooterName">الخصم</div>
+        <div class="round-dots" id="oppRoundDots">
             <div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </div>
     </div>
@@ -278,376 +294,429 @@
 
 <!-- شاشة التحدي -->
 <div class="challenge-overlay" id="challengeOverlay">
-    <div class="challenge-header" id="challengeHeader">وقت التحدي!</div>
+    <div class="ch-header" id="chHeader">وقت التحدي!</div>
     <div id="timerDisplay">30</div>
-    <div class="goal-row">الهدف: <span id="goalVal">0</span> ✅ | وصل: <span id="reachedVal">0</span></div>
-    
+    <div class="goal-row">الهدف: <span id="goalVal">0</span>&nbsp;|&nbsp;وصل: <span id="reachedVal">0</span></div>
     <button class="clicker-circle" id="mainClicker" onclick="registerPoint()">
         <span class="clicker-big-num" id="liveCounter">0</span>
-        <span class="clicker-instruction" id="clickerInstruction">اضغط مع كل إجابة</span>
+        <span class="clicker-hint" id="clickerHint">اضغط مع كل إجابة</span>
     </button>
 </div>
 
-<!-- رسالة نهاية الجولة / الفوز -->
+<!-- رسائل عامة -->
 <div class="overlay-msg" id="msgOverlay">
     <h1 id="msgTitle"></h1>
     <p id="msgBody"></p>
     <button class="btn-continue" onclick="hideOverlay()">متابعة ✌️</button>
 </div>
 
-<!-- سكب السؤال -->
+<!-- سكب -->
 <div class="skip-overlay" id="skipOverlay">
     <h2>⏭ سكب السؤال؟</h2>
     <p>سيتم اختيار سؤال جديد وتصفير المزايدة</p>
-    <button class="btn-skip-confirm" onclick="confirmSkip()">نعم، سكب</button>
-    <button class="btn-skip-cancel" onclick="closeSkipDialog()">إلغاء</button>
+    <button class="btn-skip-c" onclick="confirmSkip()">نعم، سكب</button>
+    <button class="btn-skip-x" onclick="closeSkipDialog()">إلغاء</button>
 </div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue, update, get, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getDatabase, ref, set, onValue, update, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    const firebaseConfig = { 
-        apiKey: "AIzaSyB5CobIKfYdAz8jaabJpMQrGoqS9Ton28Y", 
-        authDomain: "buttons-f3501.firebaseapp.com", 
-        databaseURL: "https://buttons-f3501-default-rtdb.firebaseio.com", 
-        projectId: "buttons-f3501" 
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+const firebaseConfig = { 
+    apiKey: "AIzaSyB5CobIKfYdAz8jaabJpMQrGoqS9Ton28Y", 
+    authDomain: "buttons-f3501.firebaseapp.com", 
+    databaseURL: "https://buttons-f3501-default-rtdb.firebaseio.com", 
+    projectId: "buttons-f3501" 
+};
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const pin = urlParams.get('pin');
-    const myName = urlParams.get('name');
-    const isHost = urlParams.get('role') === 'host';
-    const myId = isHost ? 'p1_host' : 'p2_guest_' + Date.now();
+const urlParams = new URLSearchParams(window.location.search);
+const pin    = urlParams.get('pin');
+const myName = urlParams.get('name');
+const isHost = urlParams.get('role') === 'host';
 
-    const roomRef = ref(db, `auction_pro/${pin}`);
-    const stateRef = ref(db, `auction_pro/${pin}/state`);
+// الهوست = p1، الضيف = p2
+const myKey  = isHost ? 'p1' : 'p2';
+const oppKey = isHost ? 'p2' : 'p1';
+const myId   = isHost ? 'p1_host' : 'p2_guest';
 
-    const cats = [
-        "ماركة سيارات يابانية", "اسم بنت بحرف (س)", "أكلة سعودية مشهورة", "دولة أوروبية",
-        "ماركة عطور فخمة", "شيء يوجد في المطبخ لونه أبيض", "تطبيق جوال مشهور",
-        "اسم نبي ذكر في القرآن", "حيوان زاحف", "ماركة ملابس رياضية",
-        "مكون في شاورما الدجاج", "كوكب في المجموعة الشمسية", "مهنة طبية",
-        "مدينة عربية سياحية", "ماركة ساعات عالمية", "شيء يوجد في غرفة النوم",
-        "لون يبدأ بحرف (أ)", "حيوان يعيش في الصحراء", "رياضة أولمبية",
-        "طعام يحتوي على الجبن"
-    ];
+const roomRef  = ref(db, `auction_pro/${pin}`);
+const stateRef = ref(db, `auction_pro/${pin}/state`);
 
-    let roomData = {};
-    let localTimer = null;
-    let prevStatus = null;
-    let prevQ = null;
+// صيغة الأسئلة: "كم تقدر تذكر ... في 30 ثانية؟"
+const qTopics = [
+    "ماركة سيارات يابانية", "اسم بنت يبدأ بحرف السين", "أكلة سعودية مشهورة",
+    "دولة أوروبية", "ماركة عطور فخمة", "شيء لونه أبيض في المطبخ",
+    "تطبيق جوال مشهور", "اسم نبي ذُكر في القرآن", "حيوان زاحف",
+    "ماركة ملابس رياضية", "مكوّن في الشاورما", "كوكب في المجموعة الشمسية",
+    "مهنة طبية", "مدينة عربية سياحية", "ماركة ساعات عالمية",
+    "شيء يوجد في غرفة النوم", "لون يبدأ بحرف الألف", "حيوان يعيش في الصحراء",
+    "رياضة أولمبية", "طعام يحتوي على الجبن", "فيلم ديزني مشهور",
+    "دولة في آسيا الوسطى", "فاكهة استوائية", "لاعب كرة قدم برازيلي",
+    "مادة دراسية في الجامعة", "سيارة فاخرة ألمانية", "أداة موسيقية",
+    "بلد عربي يبدأ بحرف الميم", "حلوى شعبية سعودية", "طيور مهاجرة"
+];
+function randomQ() {
+    return "كم تقدر تذكر " + qTopics[Math.floor(Math.random() * qTopics.length)] + " في 30 ثانية؟";
+}
 
-    // --- لوبي الهوست ---
-    if (isHost) {
-        document.getElementById('hostPinBox').style.display = 'block';
-        document.getElementById('lobbyPinVal').innerText = pin;
-        document.getElementById('hostActions').style.display = 'block';
+let roomData     = {};
+let localTimer   = null;
+let prevStatus   = null;
+let prevQ        = null;
+// قفل لمنع تكرار finalizeRound محلياً
+let finalizeLock = false;
 
-        set(roomRef, {
-            p1: { id: myId, name: myName, score: 0, roundsWon: 0 },
-            state: { 
-                status: 'lobby', bid: 0, bidderId: null, 
-                q: cats[Math.floor(Math.random() * cats.length)], 
-                points: 0, startTime: 0
-            }
-        });
-    } else {
-        document.getElementById('guestWaiting').style.display = 'block';
-        get(roomRef).then(snap => {
-            if (snap.exists()) {
-                update(roomRef, { p2: { id: myId, name: myName, score: 0, roundsWon: 0 } });
-            }
-        });
-    }
-
-    onValue(roomRef, snap => {
-        if (!snap.exists()) return;
-        const newData = snap.val();
-
-        // تأثير ظهور السؤال عند انتقال الحالة إلى auction
-        const statusChanged = prevStatus !== newData.state?.status;
-        const qChanged = prevQ !== newData.state?.q;
-
-        if ((statusChanged && newData.state?.status === 'auction') || 
-            (newData.state?.status === 'auction' && qChanged)) {
-            typeWriter(newData.state.q);
+// ==============================
+// إعداد أولي
+// ==============================
+if (isHost) {
+    document.getElementById('hostPinBox').style.display  = 'block';
+    document.getElementById('lobbyPinVal').innerText     = pin;
+    document.getElementById('hostActions').style.display = 'block';
+    set(roomRef, {
+        p1: { id: myId, name: myName, score: 0, roundsWon: 0 },
+        state: { 
+            status: 'lobby', bid: 0, bidderId: null, 
+            q: randomQ(), points: 0, startTime: 0, 
+            finalized: false  // حماية من التكرار
         }
-
-        prevStatus = newData.state?.status;
-        prevQ = newData.state?.q;
-        roomData = newData;
-        renderUI();
     });
-
-    function renderUI() {
-        const st = roomData.state;
-        const p1 = roomData.p1;
-        const p2 = roomData.p2;
-        if (!st || !p1) return;
-
-        const myKey = isHost ? 'p1' : 'p2';
-        const oppKey = isHost ? 'p2' : 'p1';
-        const me = roomData[myKey];
-        const opp = roomData[oppKey];
-
-        // --- اللوبي ---
-        if (st.status === 'lobby') {
-            document.getElementById('lobbyUI').style.display = 'flex';
-            if (p1 && p2) {
-                document.getElementById('lobbyStatus').innerText = `الخصم متصل: ${isHost ? p2.name : p1.name} 🔥`;
-                if (isHost) {
-                    const startBtn = document.getElementById('startBtn');
-                    startBtn.disabled = false;
-                    startBtn.innerText = '▶️ ابدأ التحدي الآن';
-                }
-            } else {
-                document.getElementById('lobbyStatus').innerText = 'في انتظار الخصم...';
-            }
-            return;
-        } else {
-            document.getElementById('lobbyUI').style.display = 'none';
+} else {
+    document.getElementById('guestWaiting').style.display = 'block';
+    get(roomRef).then(snap => {
+        if (snap.exists()) {
+            update(roomRef, { p2: { id: myId, name: myName, score: 0, roundsWon: 0 } });
         }
+    });
+}
 
-        // --- أسماء ونقاط ---
-        document.getElementById('p1Label').innerText = p1.name;
-        document.getElementById('p2Label').innerText = p2?.name || '...';
-        document.getElementById('p1ScoreLabel').innerText = p1.score;
-        document.getElementById('p2ScoreLabel').innerText = p2?.score || 0;
-        document.getElementById('p1NameFooter').innerText = p1.name;
-        document.getElementById('p2NameFooter').innerText = p2?.name || '...';
-        renderRounds('p1Rounds', p1.roundsWon);
-        renderRounds('p2Rounds', p2?.roundsWon || 0);
+// ==============================
+// الاستماع للبيانات
+// ==============================
+onValue(roomRef, snap => {
+    if (!snap.exists()) return;
+    const nd = snap.val();
+    const ns = nd.state?.status;
+    const nq = nd.state?.q;
 
-        // --- مركز المزايدة ---
-        document.getElementById('bidDisplay').innerText = st.bid;
-        const bidderP = st.bidderId ? (st.bidderId === p1.id ? p1.name : p2?.name) : null;
-        document.getElementById('bidderName').innerText = bidderP ? `عند "${bidderP}"` : 'ابدأ المزايدة';
-
-        // --- زر المزايدة: يظهر للشخص نفسه فقط، بدون ناقص ---
-        document.getElementById('bidBtn1').style.display = (isHost && st.status === 'auction') ? 'flex' : 'none';
-        document.getElementById('bidBtn2').style.display = (!isHost && st.status === 'auction') ? 'flex' : 'none';
-        // تعطيل زر المزايدة إذا كنت أنت آخر من زايد (لا يمكنك الزيادة مرة أخرى فوق نفسك)
-        const myBtn = isHost ? document.getElementById('bidBtn1') : document.getElementById('bidBtn2');
-        if (myBtn.style.display !== 'none') {
-            myBtn.disabled = (st.bidderId === (isHost ? p1.id : p2?.id));
-        }
-
-        // --- زر "روح أنت" ---
-        const goBtn = document.getElementById('goBtn');
-        goBtn.disabled = (st.status !== 'auction' || st.bid === 0 || st.bidderId === (isHost ? p1.id : p2?.id) || st.bidderId === null);
-
-        // --- زر السكب: فقط للهوست في مرحلة المزاد ---
-        document.getElementById('skipBtn').style.display = (isHost && st.status === 'auction') ? 'block' : 'none';
-
-        // --- شاشة التحدي ---
-        if (st.status === 'challenging') {
-            document.getElementById('challengeOverlay').style.display = 'flex';
-            document.getElementById('liveCounter').innerText = st.points;
-            document.getElementById('reachedVal').innerText = st.points;
-            document.getElementById('goalVal').innerText = st.bid;
-
-            // الشخص الذي يعدد = صاحب المزايدة (bidderId)
-            const imTheCounter = (isHost ? p1.id : p2?.id) === st.bidderId;
-            const clicker = document.getElementById('mainClicker');
-            
-            if (imTheCounter) {
-                // أنا أعدد = صاحبي يضغط (أنا لا أضغط)
-                clicker.classList.add('locked');
-                clicker.style.pointerEvents = 'none';
-                document.getElementById('clickerInstruction').innerText = 'صاحبك يسجل لك..';
-                document.getElementById('challengeHeader').innerText = `🗣️ عدد ${st.bid} شيء!`;
-            } else {
-                // أنا أضغط على إجابات صاحبي
-                clicker.classList.remove('locked');
-                clicker.style.pointerEvents = 'auto';
-                document.getElementById('clickerInstruction').innerText = 'اضغط مع كل إجابة ✓';
-                document.getElementById('challengeHeader').innerText = '🖱️ اضغط مع كل إجابة صحيحة';
-            }
-
-            // عرض مربع النقرات في الجانبين أثناء التحدي
-            document.getElementById('p1ClickerBox').style.display = (st.status === 'challenging') ? 'flex' : 'none';
-            document.getElementById('p2ClickerBox').style.display = (st.status === 'challenging') ? 'flex' : 'none';
-            document.getElementById('p1ClickCount').innerText = st.points;
-            document.getElementById('p2ClickCount').innerText = st.points;
-
-            if (!localTimer) startTimer();
-        } else {
-            document.getElementById('challengeOverlay').style.display = 'none';
-            document.getElementById('p1ClickerBox').style.display = 'none';
-            document.getElementById('p2ClickerBox').style.display = 'none';
-            stopTimer();
-        }
+    // كتابة تدريجية للسؤال عند بدء المزاد أو تغيير السؤال
+    if (ns === 'auction' && (prevStatus !== 'auction' || prevQ !== nq)) {
+        typeWriter(nq);
     }
 
-    function typeWriter(text) {
-        const qEl = document.getElementById('qText');
-        const line = document.getElementById('qUnderline');
-        qEl.innerHTML = '';
-        line.style.width = '0';
-        let i = 0;
-        function type() {
-            if (i < text.length) {
-                qEl.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(type, 45);
-            } else {
-                line.style.width = '85%';
-            }
-        }
-        setTimeout(type, 300);
+    // إذا خرجنا من التحدي = نوقف التايمر ونفتح القفل
+    if (prevStatus === 'challenging' && ns !== 'challenging') {
+        stopTimer();
+        finalizeLock = false;
     }
 
-    function renderRounds(id, count) {
-        const dots = document.getElementById(id).children;
-        for (let i = 0; i < 3; i++) {
-            dots[i].className = i < count ? 'dot won' : 'dot';
-        }
+    // رسالة نهاية الجولة لكل اللاعبين
+    if (ns === 'roundover' && prevStatus !== 'roundover') {
+        const wId  = nd.state.roundWinnerId;
+        const wName = wId === nd.p1?.id ? nd.p1.name : nd.p2?.name;
+        showMsg('🎯 نهاية الجولة!', `كفو يا ${wName}!\nفزت بهذه الجولة 🎉\nجولة جديدة في ثوانٍ...`);
+        setTimeout(hideOverlay, 3500);
     }
 
-    // --- التايمر الموحد ---
-    function startTimer() {
-        if (localTimer) return;
-        localTimer = setInterval(() => {
-            if (!roomData.state?.startTime) return;
-            const elapsed = Math.floor((Date.now() - roomData.state.startTime) / 1000);
-            const remaining = Math.max(0, 30 - elapsed);
-            document.getElementById('timerDisplay').innerText = remaining;
-            if (remaining === 0) {
-                stopTimer();
-                // كلا اللاعبين يحسبان انتهاء الوقت، لكن فقط الهوست يكتب النتيجة
-                if (isHost) finalizeRound(false);
-            }
-        }, 200);
-    }
-
-    function stopTimer() {
-        if (localTimer) { clearInterval(localTimer); localTimer = null; }
-    }
-
-    // ---- واجهات ----
-    window.hostStartGame = () => {
-        update(stateRef, { status: 'auction' });
-    };
-
-    window.bid = () => {
-        const p1 = roomData.p1;
-        const p2 = roomData.p2;
-        const myRealId = isHost ? p1.id : p2?.id;
-        update(stateRef, { bid: roomData.state.bid + 1, bidderId: myRealId });
-    };
-
-    window.sendGo = () => {
-        update(stateRef, { status: 'challenging', points: 0, startTime: Date.now() });
-    };
-
-    window.registerPoint = () => {
-        const st = roomData.state;
-        const newPoints = st.points + 1;
-        update(stateRef, { points: newPoints });
-        if (newPoints >= st.bid) {
-            stopTimer();
-            // كلا اللاعبين يرسل الإشارة، لكن فقط الهوست يكتب
-            if (isHost) finalizeRound(true);
-        }
-    };
-
-    // --- السكب ---
-    window.showSkipDialog = () => {
-        document.getElementById('skipOverlay').style.display = 'flex';
-    };
-    window.closeSkipDialog = () => {
-        document.getElementById('skipOverlay').style.display = 'none';
-    };
-    window.confirmSkip = () => {
-        document.getElementById('skipOverlay').style.display = 'none';
-        const nextQ = cats[Math.floor(Math.random() * cats.length)];
-        update(stateRef, { status: 'auction', bid: 0, bidderId: null, points: 0, q: nextQ, startTime: 0 });
-    };
-
-    // --- نهاية الجولة ---
-    async function finalizeRound(bidderWon) {
-        const st = roomData.state;
-        const p1 = roomData.p1;
-        const p2 = roomData.p2;
-        if (!p1 || !p2) return;
-
-        const winnerId = bidderWon ? st.bidderId : (st.bidderId === p1.id ? p2.id : p1.id);
-        const winnerKey = (winnerId === p1.id) ? 'p1' : 'p2';
-        const loserKey = winnerKey === 'p1' ? 'p2' : 'p1';
-        const newScore = roomData[winnerKey].score + 1;
-
-        if (newScore >= 5) {
-            // فاز بجولة
-            const newRounds = roomData[winnerKey].roundsWon + 1;
-            await update(ref(db, `auction_pro/${pin}/${winnerKey}`), { score: 0, roundsWon: newRounds });
-            await update(ref(db, `auction_pro/${pin}/${loserKey}`), { score: 0 });
-
-            if (newRounds >= 2) {
-                // فاز بالمباراة (Best of 3: يكفي جولتان)
-                await update(stateRef, { 
-                    status: 'gameover', 
-                    winnerId: winnerId,
-                    bid: 0, bidderId: null, points: 0, startTime: 0
+    // رسالة الفوز النهائي لكل اللاعبين
+    if (ns === 'gameover' && prevStatus !== 'gameover') {
+        const wId   = nd.state.winnerId;
+        const wName = wId === nd.p1?.id ? nd.p1.name : nd.p2?.name;
+        showMsg('🏆 بطل المزاد!', `يا وحش يا ${wName}!\nحسمت المباراة لصالحك! 🏆`);
+        // الهوست يعيد الجميع للوبي بعد 6 ثوانٍ
+        if (isHost) {
+            setTimeout(() => {
+                update(stateRef, { 
+                    status: 'lobby', bid: 0, bidderId: null, 
+                    points: 0, startTime: 0, finalized: false 
                 });
-            } else {
-                // نهاية جولة، جولة جديدة
-                const nextQ = cats[Math.floor(Math.random() * cats.length)];
-                await update(stateRef, { 
-                    status: 'roundover', 
-                    roundWinnerId: winnerId,
-                    bid: 0, bidderId: null, points: 0, q: nextQ, startTime: 0
-                });
-                setTimeout(() => {
-                    update(stateRef, { status: 'auction' });
-                }, 4000);
-            }
-        } else {
-            await update(ref(db, `auction_pro/${pin}/${winnerKey}`), { score: newScore });
-            const nextQ = cats[Math.floor(Math.random() * cats.length)];
-            update(stateRef, { status: 'auction', bid: 0, bidderId: null, points: 0, q: nextQ, startTime: 0 });
+            }, 6000);
         }
     }
 
-    // مراقبة حالة نهاية الجولة/اللعبة (لكل اللاعبين)
-    onValue(stateRef, snap => {
-        if (!snap.exists()) return;
-        const st = snap.val();
+    prevStatus = ns;
+    prevQ      = nq;
+    roomData   = nd;
+    renderUI();
+});
 
-        if (st.status === 'roundover') {
-            const p1 = roomData.p1;
-            const p2 = roomData.p2;
-            if (!p1 || !p2) return;
-            const winnerName = st.roundWinnerId === p1.id ? p1.name : p2.name;
-            showMsg('🎯 نهاية الجولة!', `كفو يا ${winnerName}، فزت بهذه الجولة!\nجولة جديدة في ثوانٍ...`);
-            setTimeout(() => hideOverlay(), 3500);
-        }
+// ==============================
+// رسم الواجهة
+// ==============================
+function renderUI() {
+    const st = roomData.state;
+    const p1 = roomData.p1;
+    const p2 = roomData.p2;
+    if (!st || !p1) return;
 
-        if (st.status === 'gameover') {
-            const p1 = roomData.p1;
-            const p2 = roomData.p2;
-            if (!p1 || !p2) return;
-            const winnerName = st.winnerId === p1.id ? p1.name : p2.name;
-            showMsg('🏆 بطل المزاد!', `يا وحش يا ${winnerName}!\nحسمت المباراة لصالحك!`);
+    const me  = roomData[myKey];
+    const opp = roomData[oppKey];
+    if (!me) return;
+
+    // ---- اللوبي ----
+    if (st.status === 'lobby') {
+        document.getElementById('lobbyUI').style.display = 'flex';
+        if (p1 && p2) {
+            const oppName = isHost ? p2.name : p1.name;
+            document.getElementById('lobbyStatus').innerText = `الخصم متصل: ${oppName} 🔥`;
             if (isHost) {
-                setTimeout(() => {
-                    update(stateRef, { status: 'lobby', bid: 0, bidderId: null, points: 0, startTime: 0 });
-                }, 6000);
+                const btn = document.getElementById('startBtn');
+                btn.disabled  = false;
+                btn.innerText = '▶️ ابدأ التحدي الآن';
             }
+        } else {
+            document.getElementById('lobbyStatus').innerText = 'في انتظار الخصم...';
         }
-    });
-
-    function showMsg(title, body) {
-        document.getElementById('msgTitle').innerText = title;
-        document.getElementById('msgBody').innerText = body;
-        document.getElementById('msgOverlay').style.display = 'flex';
+        return;
     }
+    document.getElementById('lobbyUI').style.display = 'none';
 
-    window.hideOverlay = () => {
-        document.getElementById('msgOverlay').style.display = 'none';
-    };
+    // ---- الأسماء والنقاط ----
+    document.getElementById('myLabel').innerText      = me.name + ' (أنت)';
+    document.getElementById('oppLabel').innerText     = opp?.name || '...';
+    document.getElementById('myScoreLabel').innerText = me.score || 0;
+    document.getElementById('oppScoreLabel').innerText = opp?.score || 0;
+    document.getElementById('myFooterName').innerText  = me.name;
+    document.getElementById('oppFooterName').innerText = opp?.name || '...';
+    renderRounds('myRoundDots',  me.roundsWon  || 0);
+    renderRounds('oppRoundDots', opp?.roundsWon || 0);
+
+    // ---- مركز المزايدة ----
+    document.getElementById('bidDisplay').innerText = st.bid || 0;
+    // تحديد اسم صاحب المزايدة بشكل صحيح
+    let bidderDisplayName = 'ابدأ المزايدة';
+    if (st.bidderId) {
+        if (st.bidderId === p1.id) bidderDisplayName = `عند "${p1.name}"`;
+        else if (p2 && st.bidderId === p2.id) bidderDisplayName = `عند "${p2.name}"`;
+    }
+    document.getElementById('bidderName').innerText = bidderDisplayName;
+
+    // ---- زر المزايدة ----
+    const inAuction      = st.status === 'auction';
+    const iAmLastBidder  = st.bidderId === me.id;
+    const myBidBtn       = document.getElementById('myBidBtn');
+    myBidBtn.style.display = inAuction ? 'flex' : 'none';
+    myBidBtn.disabled      = iAmLastBidder;
+
+    // ---- زر "روح أنت" ----
+    const goBtn = document.getElementById('goBtn');
+    // يُفعَّل: في مزاد + فيه مزايدة + الخصم هو صاحب المزايدة (= أنا لست صاحبها)
+    const canGo = inAuction && (st.bid || 0) > 0 && !iAmLastBidder && !!st.bidderId;
+    goBtn.disabled = !canGo;
+
+    // ---- زر السكب (للهوست فقط في المزاد) ----
+    document.getElementById('skipBtn').style.display = (isHost && inAuction) ? 'block' : 'none';
+
+    // ---- شاشة التحدي ----
+    if (st.status === 'challenging') {
+        document.getElementById('challengeOverlay').style.display = 'flex';
+        const pts = st.points || 0;
+        document.getElementById('liveCounter').innerText  = pts;
+        document.getElementById('reachedVal').innerText   = pts;
+        document.getElementById('goalVal').innerText      = st.bid;
+        document.getElementById('myClickVal').innerText   = pts;
+        document.getElementById('oppClickVal').innerText  = pts;
+        document.getElementById('myClickBox').style.display  = 'flex';
+        document.getElementById('oppClickBox').style.display = 'flex';
+
+        // من يُعدِّد؟ = صاحب المزايدة (bidderId)
+        // من يضغط؟ = الطرف الآخر
+        const imTheCounter = (me.id === st.bidderId);
+        const clicker = document.getElementById('mainClicker');
+
+        if (imTheCounter) {
+            clicker.classList.add('locked');
+            document.getElementById('clickerHint').innerText  = 'صاحبك يسجل لك..';
+            document.getElementById('chHeader').innerText     = `🗣️ عدد ${st.bid} شيء!`;
+        } else {
+            clicker.classList.remove('locked');
+            document.getElementById('clickerHint').innerText  = 'اضغط مع كل إجابة ✓';
+            document.getElementById('chHeader').innerText     = '🖱️ اضغط مع كل إجابة صحيحة';
+        }
+
+        if (!localTimer) startTimer();
+    } else {
+        document.getElementById('challengeOverlay').style.display = 'none';
+        document.getElementById('myClickBox').style.display       = 'none';
+        document.getElementById('oppClickBox').style.display      = 'none';
+        stopTimer();
+    }
+}
+
+// ==============================
+// الكتابة التدريجية
+// ==============================
+function typeWriter(text) {
+    const qEl  = document.getElementById('qText');
+    const line = document.getElementById('qUnderline');
+    qEl.innerHTML   = '';
+    line.style.width = '0';
+    let i = 0;
+    function type() {
+        if (i < text.length) { qEl.innerHTML += text.charAt(i++); setTimeout(type, 40); }
+        else { line.style.width = '85%'; }
+    }
+    setTimeout(type, 350);
+}
+
+function renderRounds(id, count) {
+    const dots = document.getElementById(id).children;
+    for (let i = 0; i < 3; i++) dots[i].className = i < count ? 'dot won' : 'dot';
+}
+
+// ==============================
+// التايمر الموحد
+// ==============================
+function startTimer() {
+    if (localTimer) return;
+    localTimer = setInterval(() => {
+        const st = roomData.state;
+        if (!st?.startTime) return;
+        const elapsed   = Math.floor((Date.now() - st.startTime) / 1000);
+        const remaining = Math.max(0, 30 - elapsed);
+        const el = document.getElementById('timerDisplay');
+        el.innerText = remaining;
+        el.classList.toggle('warning', remaining <= 5);
+
+        if (remaining === 0 && !finalizeLock) {
+            finalizeLock = true;
+            stopTimer();
+            // كلا الطرفين يحاول finalizeRound، لكن حقل finalized في Firebase يمنع التكرار
+            finalizeRound(false);
+        }
+    }, 250);
+}
+
+function stopTimer() {
+    if (localTimer) { clearInterval(localTimer); localTimer = null; }
+}
+
+// ==============================
+// الأوامر الرئيسية
+// ==============================
+window.hostStartGame = () => {
+    update(stateRef, { status: 'auction' });
+};
+
+window.bid = () => {
+    const me = roomData[myKey];
+    if (!me) return;
+    update(stateRef, { bid: (roomData.state?.bid || 0) + 1, bidderId: me.id });
+};
+
+window.sendGo = () => {
+    update(stateRef, { 
+        status: 'challenging', points: 0, 
+        startTime: Date.now(), finalized: false 
+    });
+};
+
+// تسجيل نقرة - كلا الطرفين قادر على هذا
+window.registerPoint = () => {
+    const st = roomData.state;
+    if (!st || st.status !== 'challenging' || finalizeLock) return;
+
+    const newPts = (st.points || 0) + 1;
+    // تحديث النقاط في Firebase
+    update(stateRef, { points: newPts });
+
+    // وصلنا الهدف! - كلا الطرفين يطلق finalizeRound
+    if (newPts >= st.bid && !finalizeLock) {
+        finalizeLock = true;
+        stopTimer();
+        finalizeRound(true); // المزايِد فاز (وصل الهدف)
+    }
+};
+
+// ==============================
+// إنهاء الجولة - محمي من التكرار
+// المنطق: bidderWon = true يعني الشخص الذي زايد (وقبل التحدي) فاز
+// بالمعنى العملي: إذا وصل الهدف = المزايِد فاز (هو يُعدِّد وصاحبه يصادق)
+// إذا انتهى الوقت = الضاغط (الخصم) فاز
+// ==============================
+async function finalizeRound(bidderWon) {
+    // اقرأ أحدث بيانات مباشرة من Firebase
+    let snap;
+    try { snap = await get(roomRef); } catch(e) { return; }
+    if (!snap.exists()) return;
+
+    const data = snap.val();
+    const st   = data.state;
+    const p1   = data.p1;
+    const p2   = data.p2;
+
+    // حماية: إذا كان finalized = true فلا تنفذ شيئاً
+    if (st.finalized) return;
+    if (!p1 || !p2 || !st.bidderId) return;
+
+    // اضبط finalized فوراً لمنع الطرف الآخر
+    try { await update(stateRef, { finalized: true }); } catch(e) { return; }
+
+    // تحديد الرابح
+    // bidderWon=true: رابح = المزايِد (bidderId)
+    // bidderWon=false (انتهى الوقت): رابح = الضاغط (الطرف الآخر)
+    const winnerId = bidderWon 
+        ? st.bidderId 
+        : (st.bidderId === p1.id ? p2.id : p1.id);
+    
+    const wKey = winnerId === p1.id ? 'p1' : 'p2';
+    const lKey = wKey === 'p1' ? 'p2' : 'p1';
+    const newScore = (data[wKey].score || 0) + 1;
+
+    if (newScore >= 5) {
+        // فاز بنقاط الجولة
+        const newRounds = (data[wKey].roundsWon || 0) + 1;
+        await update(ref(db, `auction_pro/${pin}/${wKey}`), { score: 0, roundsWon: newRounds });
+        await update(ref(db, `auction_pro/${pin}/${lKey}`), { score: 0 });
+
+        if (newRounds >= 2) {
+            // فوز نهائي بالمباراة (Best of 3)
+            await update(stateRef, { 
+                status: 'gameover', winnerId,
+                bid: 0, bidderId: null, points: 0, startTime: 0, finalized: true
+            });
+        } else {
+            // نهاية جولة، جولة جديدة
+            await update(stateRef, { 
+                status: 'roundover', roundWinnerId: winnerId,
+                bid: 0, bidderId: null, points: 0, 
+                q: randomQ(), startTime: 0, finalized: true
+            });
+            setTimeout(() => {
+                update(stateRef, { status: 'auction', finalized: false });
+            }, 4000);
+        }
+    } else {
+        // نقطة عادية، استمر
+        await update(ref(db, `auction_pro/${pin}/${wKey}`), { score: newScore });
+        update(stateRef, { 
+            status: 'auction', bid: 0, bidderId: null, points: 0, 
+            q: randomQ(), startTime: 0, finalized: false 
+        });
+    }
+}
+
+// ==============================
+// السكب
+// ==============================
+window.showSkipDialog  = () => { document.getElementById('skipOverlay').style.display = 'flex'; };
+window.closeSkipDialog = () => { document.getElementById('skipOverlay').style.display = 'none'; };
+window.confirmSkip     = () => {
+    document.getElementById('skipOverlay').style.display = 'none';
+    update(stateRef, { 
+        status: 'auction', bid: 0, bidderId: null, points: 0, 
+        q: randomQ(), startTime: 0, finalized: false 
+    });
+};
+
+function showMsg(title, body) {
+    document.getElementById('msgTitle').innerText = title;
+    document.getElementById('msgBody').innerText  = body;
+    document.getElementById('msgOverlay').style.display = 'flex';
+}
+window.hideOverlay = () => { document.getElementById('msgOverlay').style.display = 'none'; };
 </script>
 </body>
 </html>
